@@ -78,20 +78,11 @@ const app = {
   },
 
   getConceptOfTheDay() {
-    const stored = JSON.parse(localStorage.getItem('cotd') || '{}');
-    const now = Date.now();
-    const twentyFourHours = 24 * 60 * 60 * 1000;
-
-    // If we have a stored concept AND it's less than 24h old, reuse it
-    if (stored.id && stored.timestamp && (now - stored.timestamp) < twentyFourHours) {
-      const found = concepts.find(c => c.id === stored.id);
-      if (found) return found;
-    }
-
-    // Otherwise pick a new random concept and store it
-    const randomConcept = concepts[Math.floor(Math.random() * concepts.length)];
-    localStorage.setItem('cotd', JSON.stringify({ id: randomConcept.id, timestamp: now }));
-    return randomConcept;
+    // Deterministic: divide epoch ms by ms-per-day to get a stable daily index.
+    // Every user on the same calendar day (UTC) sees the exact same concept.
+    // Changes automatically at midnight UTC — no localStorage needed.
+    const dayIndex = Math.floor(Date.now() / (24 * 60 * 60 * 1000));
+    return concepts[dayIndex % concepts.length];
   },
 
   initTheme() {
