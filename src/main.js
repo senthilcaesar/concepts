@@ -7,7 +7,7 @@ const concepts = [
     title: 'Slope',
     category: 'Technical',
     tags: [],
-    description: '',
+    description: 'The amount that Y increase or decreases per one-unit increase in X',
     interactiveType: 'custom'
   },
   {
@@ -15,15 +15,15 @@ const concepts = [
     title: 'Intercept',
     category: 'Technical',
     tags: [],
-    description: '',
+    description: 'The value of Y, the dependent variable, when X, the independent variable, equals 0',
     interactiveType: 'custom'
   },
   {
-    id: 'confidence-interval',
-    title: 'Confidence Interval',
+    id: 'lr',
+    title: 'Linear Regression',
     category: 'Technical',
     tags: [],
-    description: '',
+    description: 'In order to define a linear relationship between two variables, we need a slope and an intercept',
     interactiveType: 'custom'
   },
   {
@@ -100,6 +100,9 @@ const app = {
       document.documentElement.classList.add('light-mode');
       document.querySelector('#theme-toggle .icon').textContent = '☀️';
     }
+    if (localStorage.getItem('sidebar') === 'collapsed') {
+      document.getElementById('app').classList.add('sidebar-collapsed');
+    }
   },
 
   renderSidebar() {
@@ -115,6 +118,13 @@ const app = {
         const id = e.target.dataset.id;
         this.selectConcept(id);
       }
+    });
+
+    // Sidebar toggle
+    document.getElementById('sidebar-toggle').addEventListener('click', () => {
+      const app = document.getElementById('app');
+      const collapsed = app.classList.toggle('sidebar-collapsed');
+      localStorage.setItem('sidebar', collapsed ? 'collapsed' : 'open');
     });
 
     // Theme toggle
