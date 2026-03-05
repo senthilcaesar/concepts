@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/concepts/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Technical Concepts | Knowledge Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/concepts/assets/index-BcaA66ph.js"></script>
+    <link rel="stylesheet" crossorigin href="/concepts/assets/index-D_3Lrn51.css">
+  </head>
+  <body>
+    <canvas id="constellation-bg"></canvas>
+    <div id="app">
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <h1 id="home-link">Knowledge<span>Lab</span></h1>
+        </header>
+        <nav class="nav-menu">
+          <ul id="concept-list">
+            <!-- Concepts will be injected here -->
+          </ul>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <header class="top-bar">
+          <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Toggle Sidebar">
+            <span class="toggle-icon">‹</span>
+          </button>
+          <div class="search-container">
+            <input type="text" id="concept-search" placeholder="Search concepts... (Cmd+K)">
+          </div>
+          <button id="theme-toggle" class="theme-btn" title="Toggle Light/Dark Mode">
+            <span class="icon">🌙</span>
+          </button>
+        </header>
+        <section id="content-area" class="content-area">
+          <div class="welcome-card">
+            <h2>Welcome to Knowledge Lab</h2>
+            <p>Select a concept from the sidebar to begin your interactive learning journey.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
