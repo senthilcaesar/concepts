@@ -26,6 +26,14 @@ const concepts = [
     description: 'In order to define a linear relationship between two variables, we need a slope and an intercept',
     interactiveType: 'custom'
   },
+    {
+    id: 'residual',
+    title: 'Residual',
+    category: 'Technical',
+    tags: [],
+    description: 'The diffence between observed or actual value and the predicted values of the regression line. The sum of squared residuals is the sum of the squared differences between each observed value and the associated predicted value. Data professionls use this sum to capture a summary of total error in the model.',
+    interactiveType: 'custom'
+  },
   {
     id: 'backpropagation',
     title: 'Backpropagation',
