@@ -70,6 +70,11 @@ body {
   width: 100vw;
 }
 
+/* Mobile: allow body scroll when sidebar is open */
+body.sidebar-open {
+  overflow: hidden;
+}
+
 h1, h2, h3 {
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
@@ -350,6 +355,28 @@ h1, h2, h3 {
   color: var(--text-secondary);
 }
 
+.concept-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.concept-content p:last-child {
+  margin-bottom: 0;
+}
+
+.read-more-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--accent-primary);
+  transition: var(--transition-fast);
+}
+
+.read-more-link:hover {
+  border-bottom-style: solid;
+  opacity: 0.8;
+}
+
 /* Concept of the Day ticker */
 .cotd-ticker {
   display: flex;
@@ -419,4 +446,173 @@ h1, h2, h3 {
 
 :root.light-mode .cotd-label {
   color: var(--accent-primary);
+}
+
+/* ==============================================
+   RESPONSIVE: Tablet (641px – 1024px)
+   ============================================== */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .welcome-card {
+    padding: 2rem;
+  }
+
+  .welcome-card h2 {
+    font-size: 2rem;
+  }
+
+  .concept-title {
+    font-size: 1.6rem;
+  }
+
+  .content-area {
+    padding: 1.5rem;
+  }
+
+  .top-bar {
+    padding: 0 1.25rem;
+  }
+}
+
+/* ==============================================
+   RESPONSIVE: Mobile (≤ 640px)
+   ============================================== */
+@media (max-width: 640px) {
+  :root {
+    --sidebar-width: 80vw;
+  }
+
+  /* App layout stacks; main content fills full width */
+  #app {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Sidebar becomes a fixed overlay drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--sidebar-width) !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    border-right: 1px solid var(--border-color);
+  }
+
+  /* Show sidebar when app has sidebar-open class */
+  #app.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* Dim backdrop when drawer is open */
+  #app.sidebar-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Override desktop collapsed state on mobile */
+  #app.sidebar-collapsed .sidebar {
+    width: var(--sidebar-width) !important;
+  }
+
+  /* Toggle icon always points right on mobile (closed state) */
+  #app:not(.sidebar-open) .sidebar-toggle-btn .toggle-icon {
+    transform: rotate(0deg);
+  }
+  #app.sidebar-open .sidebar-toggle-btn .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Main content fills entire viewport */
+  .main-content {
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* Top bar: tighten spacing */
+  .top-bar {
+    padding: 0 1rem;
+    height: 60px;
+    gap: 0.75rem;
+  }
+
+  /* Search bar takes remaining space */
+  .search-container {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
+  #concept-search {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Content area: compact padding, allow scroll */
+  .content-area {
+    padding: 1rem;
+    gap: 1rem;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+  }
+
+  /* Welcome card */
+  .welcome-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .welcome-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .welcome-card p {
+    font-size: 0.95rem;
+  }
+
+  /* Concept card */
+  .concept-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .concept-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .concept-meta {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Ticker: stack label above track on very small screens */
+  .cotd-ticker {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .cotd-label {
+    font-size: 0.7rem;
+  }
+
+  .ticker-text {
+    font-size: 0.95rem;
+  }
+
+  /* Sidebar header padding */
+  .sidebar-header {
+    padding: 1.25rem 1.5rem;
+  }
 }

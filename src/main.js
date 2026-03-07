@@ -23,7 +23,7 @@ const concepts = [
     title: 'Linear Regression',
     category: 'Technical',
     tags: [],
-    description: 'In order to define a linear relationship between two variables, we need a slope and an intercept. \n\nThe four assumptions of simple linear regression are linearity, normality, independent observations, and homoscedasticity. Linearity assumes that each predictor variable Xi is linearly related to the outcome variable Y. Normality assumes that the residual values are normally distributed. Independent observation assumes that each observation in the dataset is independent. And homoscedasticity assumes the values have the same variance.',
+    description: 'In order to define a linear relationship between two variables, we need a slope and an intercept. \n\nThe four assumptions of simple linear regression are linearity, normality, independent observations, and homoscedasticity. Linearity assumes that each predictor variable Xi is linearly related to the outcome variable Y. Normality assumes that the residual values are normally distributed. Independent observation assumes that each observation in the dataset is independent. And homoscedasticity assumes over the values have the same variance.\n\nFor more reading, check out these guides:\n\n• <a href="https://woolly-revolve-fec.notion.site/The-four-main-assumptions-of-simple-linear-regression-31cbdfa1611d80e89277dea76aa262e9?source=copy_link" target="_blank" class="read-more-link">The Four Main Assumptions of Simple Linear Regression</a>\n\n• <a href="https://woolly-revolve-fec.notion.site/Correlation-and-the-intuition-behind-simple-linear-regression-31cbdfa1611d801689c5e06961a2c888?source=copy_link" target="_blank" class="read-more-link">Correlation and the intuition behind simple linear regression</a>\n\n• <a href="docs/slr.html" target="_blank" class="read-more-link">Explore linear regression with Python</a>',
     interactiveType: 'custom'
   },
     {
@@ -31,7 +31,7 @@ const concepts = [
     title: 'Residual',
     category: 'Technical',
     tags: [],
-    description: 'The difference between observed or actual value and the predicted values of the regression line. \n\nThe sum of squared residuals is the sum of the squared differences between each observed value and the associated predicted value. Data professionals use this sum to capture a summary of total error in the model.',
+    description: 'The difference between observed or actual value and the predicted values of the regression line. \n\nThe sum of squared residuals is the sum of the squared differences between each observed value and the associated predicted value. Data professionals use this sum to capture a summary of total error in the model.\n\nFor more reading, check out this guide: <a href="https://woolly-revolve-fec.notion.site/Explore-ordinary-least-squares-31cbdfa1611d80ae9278f35874020e58?source=copy_link" target="_blank" class="read-more-link">Explore ordinary least squares</a>',
     interactiveType: 'custom'
   },
   {
@@ -111,19 +111,40 @@ const app = {
     `).join('');
   },
 
+  isMobile() {
+    return window.innerWidth <= 640;
+  },
+
+  closeMobileSidebar() {
+    document.getElementById('app').classList.remove('sidebar-open');
+  },
+
   setupEventListeners() {
+    // Concept list: close mobile drawer after selecting
     document.getElementById('concept-list').addEventListener('click', (e) => {
       if (e.target.classList.contains('nav-item')) {
         const id = e.target.dataset.id;
+        if (this.isMobile()) this.closeMobileSidebar();
         this.selectConcept(id);
       }
     });
 
-    // Sidebar toggle
+    // Sidebar toggle: overlay drawer on mobile, collapse on desktop
     document.getElementById('sidebar-toggle').addEventListener('click', () => {
       const app = document.getElementById('app');
-      const collapsed = app.classList.toggle('sidebar-collapsed');
-      localStorage.setItem('sidebar', collapsed ? 'collapsed' : 'open');
+      if (this.isMobile()) {
+        app.classList.toggle('sidebar-open');
+      } else {
+        const collapsed = app.classList.toggle('sidebar-collapsed');
+        localStorage.setItem('sidebar', collapsed ? 'collapsed' : 'open');
+      }
+    });
+
+    // Backdrop click: close mobile drawer
+    document.getElementById('app').addEventListener('click', (e) => {
+      if (this.isMobile() && e.target === document.getElementById('app')) {
+        this.closeMobileSidebar();
+      }
     });
 
     // Theme toggle
@@ -138,6 +159,7 @@ const app = {
     document.getElementById('home-link').addEventListener('click', () => {
       this.activeConcept = null;
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (this.isMobile()) this.closeMobileSidebar();
       this.renderWelcome();
     });
 
