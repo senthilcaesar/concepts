@@ -23,7 +23,7 @@ const concepts = [
     title: 'Linear Regression',
     category: 'Technical',
     tags: [],
-    description: 'In order to define a linear relationship between two variables, we need a slope and an intercept',
+    description: 'In order to define a linear relationship between two variables, we need a slope and an intercept. \n\nThe four assumptions of simple linear regression are linearity, normality, independent observations, and homoscedasticity. Linearity assumes that each predictor variable Xi is linearly related to the outcome variable Y. Normality assumes that the residual values are normally distributed. Independent observation assumes that each observation in the dataset is independent. And homoscedasticity assumes the values have the same variance.',
     interactiveType: 'custom'
   },
     {
@@ -31,7 +31,7 @@ const concepts = [
     title: 'Residual',
     category: 'Technical',
     tags: [],
-    description: 'The diffence between observed or actual value and the predicted values of the regression line. The sum of squared residuals is the sum of the squared differences between each observed value and the associated predicted value. Data professionls use this sum to capture a summary of total error in the model.',
+    description: 'The difference between observed or actual value and the predicted values of the regression line. \n\nThe sum of squared residuals is the sum of the squared differences between each observed value and the associated predicted value. Data professionals use this sum to capture a summary of total error in the model.',
     interactiveType: 'custom'
   },
   {
@@ -177,7 +177,7 @@ const app = {
           ${concept.tags.map(t => `<span class="tag">${t}</span>`).join('')}
         </div>
         <div class="concept-content" id="concept-description">
-          <p>${concept.description || 'Add your description here...'}</p>
+          ${(concept.description || 'Add your description here...').split('\n\n').map(p => `<p>${p}</p>`).join('')}
         </div>
       </article>
     `;
