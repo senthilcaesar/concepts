@@ -11,6 +11,7 @@
   </head>
   <body>
     <canvas id="constellation-bg"></canvas>
+    <div id="zen-flow-bg" class="zen-flow-bg"></div>
     <div id="app">
       <aside class="sidebar">
         <header class="sidebar-header">
@@ -30,9 +31,14 @@
           <div class="search-container">
             <input type="text" id="concept-search" placeholder="Search concepts... (Cmd+K)">
           </div>
-          <button id="theme-toggle" class="theme-btn" title="Toggle Light/Dark Mode">
-            <span class="icon">🌙</span>
-          </button>
+          <div class="header-actions">
+            <button id="study-mode-btn" class="study-mode-btn" title="Study Mode">
+              <span class="icon">⏱️</span>
+            </button>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Light/Dark Mode">
+              <span class="icon">🌙</span>
+            </button>
+          </div>
         </header>
         <section id="content-area" class="content-area">
           <div class="welcome-card">
@@ -41,7 +47,82 @@
           </div>
         </section>
       </main>
+
     </div>
+
+    <!-- Study Mode Overlay -->
+    <div id="study-mode-overlay" class="study-mode-overlay hidden">
+      <canvas id="zen-flow-canvas" class="zen-flow-canvas"></canvas>
+      <div class="study-container">
+        <header class="study-header">
+          <div class="study-logo">✦ FOCUS</div>
+          <div class="study-header-actions">
+            <button id="minimize-study" class="minimize-btn" title="Minimize — keep timer running">
+              <span>⌃</span>
+            </button>
+            <button id="exit-study" class="exit-btn" title="Exit Study Mode">
+              <span>✕</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="study-content">
+          <!-- Timer View -->
+          <div id="timer-view" class="study-view active">
+            <div class="timer-wrapper">
+              <div class="breathing-ring"></div>
+              <div class="timer-ring">
+                <svg viewBox="0 0 280 280">
+                  <circle class="timer-track" cx="140" cy="140" r="130"/>
+                  <circle id="timer-progress" class="timer-progress" cx="140" cy="140" r="130"/>
+                </svg>
+                <div class="timer-display">
+                  <span id="timer-minutes" class="timer-digits">25</span>
+                  <span class="timer-sep">:</span>
+                  <span id="timer-seconds" class="timer-digits">00</span>
+                </div>
+              </div>
+              <div class="timer-status" id="timer-status">Ready to focus</div>
+            </div>
+
+            <div class="timer-actions">
+              <button id="timer-toggle" class="primary-btn">Start Focus</button>
+              <button id="timer-reset" class="secondary-btn">Reset</button>
+              <button id="lock-screen-btn" class="lock-btn hidden" title="Lock Screen">
+                <span>🔒</span>
+              </button>
+            </div>
+
+            <div class="timer-presets">
+              <button class="preset-btn" data-time="15">15m</button>
+              <button class="preset-btn active" data-time="25">25m</button>
+              <button class="preset-btn" data-time="45">45m</button>
+              <button class="preset-btn" data-time="60">60m</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Lock screen unlock overlay -->
+      <div id="unlock-screen-overlay" class="unlock-screen-overlay hidden">
+        <button id="unlock-screen-btn" class="unlock-btn" title="Unlock Screen">
+          <span class="unlock-icon">🔓</span>
+          <span>Unlock</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating mini-timer widget (shown when study mode is minimized) -->
+    <div id="mini-timer" class="mini-timer hidden">
+      <div class="mini-timer-inner" id="expand-study" title="Click to expand Study Mode">
+        <span class="mini-timer-icon">⏱️</span>
+        <span id="mini-timer-display" class="mini-timer-display">25:00</span>
+        <div class="mini-timer-bar">
+          <div id="mini-timer-progress" class="mini-timer-progress"></div>
+        </div>
+      </div>
+      <button id="mini-stop-btn" class="mini-stop-btn" title="Stop timer & exit Study Mode">✕</button>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

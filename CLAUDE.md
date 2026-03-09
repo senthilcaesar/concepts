@@ -1,6 +1,6 @@
-# CLAUDE.md — Knowledge Lab
+# CLAUDE.md
 
-This file provides context for AI coding assistants working on this project.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
