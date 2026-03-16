@@ -1,5 +1,6 @@
 import './style.css'
 import { initConstellation } from './constellation.js'
+import pkg from '../package.json'
 
 const concepts = [
   {
@@ -78,6 +79,7 @@ const app = {
     this.initTheme();
     this.initStudyMode();
     this.renderWelcome();
+    this.initTechStackModal();
     // Start the neural constellation background
     initConstellation(document.getElementById('constellation-bg'));
   },
@@ -95,7 +97,7 @@ const app = {
         </div>
       </div>
       <div class="welcome-card">
-        <h2>Welcome to Knowledge Lab</h2>
+        <h2>Welcome to Concept Lab</h2>
         <p>Select a concept from the sidebar to begin your interactive learning journey.</p>
       </div>
     `;
@@ -229,6 +231,84 @@ const app = {
         </div>
       </article>
     `;
+  },
+
+  // ========================================
+  // TECH STACK MODAL
+  // ========================================
+  initTechStackModal() {
+    const btn = document.getElementById('tech-stack-btn');
+    const closeBtn = document.getElementById('close-tech-stack');
+    const modal = document.getElementById('tech-stack-modal');
+
+    // Event listeners
+    if (btn) btn.addEventListener('click', () => this.toggleTechStackModal(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => this.toggleTechStackModal(false));
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) this.toggleTechStackModal(false);
+      });
+    }
+
+    this.renderTechStack();
+  },
+
+  toggleTechStackModal(show) {
+    const modal = document.getElementById('tech-stack-modal');
+    if (!modal) return;
+    if (show) {
+      modal.classList.remove('hidden');
+      // small delay for transition
+      setTimeout(() => modal.classList.add('visible'), 10);
+    } else {
+      modal.classList.remove('visible');
+      setTimeout(() => modal.classList.add('hidden'), 300); // match transition duration
+    }
+  },
+
+  renderTechStack() {
+    const list = document.getElementById('dynamic-tech-list');
+    if (!list) return;
+
+    // Determine tech used based on basic configuration and pkg object
+    const dependencies = Object.assign({}, pkg.dependencies || {}, pkg.devDependencies || {});
+    
+    const technologies = [
+      {
+        name: 'Vite',
+        description: 'Fast, modern build tool and dev server powering the local environment.',
+        icon: '⚡',
+        active: !!dependencies['vite']
+      },
+      {
+        name: 'Vanilla JS',
+        description: 'Pure, lightweight JavaScript without bloated UI frameworks.',
+        icon: '🟨',
+        active: true
+      },
+      {
+        name: 'HTML5 & CSS3',
+        description: 'Modern markup and advanced CSS capabilities for styling and layouts.',
+        icon: '🎨',
+        active: true
+      },
+      {
+        name: 'HTML Canvas',
+        description: 'Native 2D rendering used for interactive visual backgrounds.',
+        icon: '🖌️',
+        active: true
+      }
+    ].filter(t => t.active);
+
+    list.innerHTML = technologies.map(tech => `
+      <li class="tech-item">
+        <div class="tech-icon-wrapper">${tech.icon}</div>
+        <div class="tech-details">
+          <span class="tech-name">${tech.name}</span>
+          <span class="tech-desc">${tech.description}</span>
+        </div>
+      </li>
+    `).join('');
   },
 
   // ========================================
